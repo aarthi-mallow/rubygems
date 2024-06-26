@@ -1676,7 +1676,7 @@ RSpec.describe "bundle lock" do
       G
     end
 
-    it "locks ruby specs" do
+    it "locks both ruby and platform specific specs" do
       checksums = checksums_section_when_existing do |c|
         c.no_checksum "foo", "1.0"
         c.no_checksum "nokogiri", "1.14.2"
@@ -1697,6 +1697,7 @@ RSpec.describe "bundle lock" do
           remote: https://gem.repo4/
           specs:
             nokogiri (1.14.2)
+            nokogiri (1.14.2-x86_64-linux)
 
         PLATFORMS
           ruby
