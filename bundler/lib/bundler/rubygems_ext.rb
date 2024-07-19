@@ -219,7 +219,7 @@ module Gem
 
     unless method_defined?(:encode_with, false)
       def encode_with(coder)
-        %i[@name @requirement @type @prerelease @version_requirements].each do |ivar|
+        [:@name, :@requirement, :@type, :@prerelease, :@version_requirements].each do |ivar|
           coder[ivar.to_s.sub(/^@/, "")] = instance_variable_get(ivar)
         end
       end
