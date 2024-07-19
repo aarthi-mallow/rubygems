@@ -251,7 +251,31 @@ class Gem::Uninstaller
     raise Gem::FilePermissionError, spec.base_dir unless
       File.writable?(spec.base_dir)
 
-    safe_delete { FileUtils.rm_r spec.full_gem_path }
+    exclusions = if default_spec_matches?(spec)
+      spec.executables.flat_map do |exe_name|
+        path = Gem.bin_path(spec.name, exe_name, spec.version)
+        paths = [path]
+
+        until File.identical?(spec.full_gem_path, path)
+          parent_path = File.dirname(path)
+          break if parent_path == path
+
+          path = parent_path
+          paths << path
+        end
+
+        paths
+      end
+    else
+      []
+    end
+
+    safe_delete do
+      FileUtils::Entry_.new(spec.full_gem_path).postorder_traverse do |ent|
+        ent.remove unless exclusions.include?(ent.path)
+      end
+    end
+
     safe_delete { FileUtils.rm_r spec.extension_dir }
 
     old_platform_name = spec.original_name
