@@ -667,7 +667,7 @@ end
 
 namespace :bundler do
   chdir(File.expand_path("bundler", __dir__)) do
-    require_relative "bundler/lib/bundler/gem_tasks"
+    require_relative "CustomBundler/lib/CustomBundler/gem_tasks"
   end
   require_relative "bundler/spec/support/build_metadata"
   require_relative "tool/release"

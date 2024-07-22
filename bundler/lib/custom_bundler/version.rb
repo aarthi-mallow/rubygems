@@ -1,0 +1,13 @@
+# frozen_string_literal: false
+
+module CustomBundler
+  VERSION = "2.6.0.dev".freeze
+
+  def self.bundler_major_version
+    @bundler_major_version ||= VERSION.split(".").first.to_i
+  end
+
+  def self.gem_version
+    @gem_version ||= Gem::Version.create(VERSION)
+  end
+end
