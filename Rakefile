@@ -505,7 +505,7 @@ task update_licenses_branch: :update_licenses do
   end
 end
 
-require_relative "bundler/spec/support/rubygems_ext"
+require_relative "custom_bundler/spec/support/rubygems_ext"
 
 desc "Run specs"
 task :spec do
@@ -669,7 +669,7 @@ namespace :bundler do
   chdir(File.expand_path("bundler", __dir__)) do
     require_relative "CustomBundler/lib/CustomBundler/gem_tasks"
   end
-  require_relative "bundler/spec/support/build_metadata"
+  require_relative "custom_bundler/spec/support/build_metadata"
   require_relative "tool/release"
 
   Bundler::GemHelper.tag_prefix = "bundler-"
